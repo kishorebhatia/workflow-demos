@@ -1,4 +1,4 @@
-node('linux') { // COMPILE AND JUNIT
+node('slave') { // COMPILE AND JUNIT
     def src = 'https://github.com/harniman/spring-petclinic.git'
     // def src = '/Users/nharniman/git/harniman/spring-petclinic'
     git url: src
