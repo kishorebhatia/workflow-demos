@@ -4,7 +4,8 @@ node('slave') { // COMPILE AND JUNIT
     git url: src
 
     ensureMaven()
-    sh 'mvn -o clean package'
+    //sh 'mvn -o clean package'
+     sh 'mvn clean package'
 }
 
 
