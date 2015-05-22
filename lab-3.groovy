@@ -51,7 +51,7 @@ parallel(qualityAnalysis: {
 
         ensureMaven()
         sh 'tar -x -f src.tar'
-        sh 'mvn -o jmeter:jmeter'
+        //sh 'mvn -o jmeter:jmeter'
 
         shutdownApp(perfsCatalinaBase)
         echo "INFO - Ending Perf Tests"
