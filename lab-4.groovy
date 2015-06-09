@@ -61,10 +61,36 @@ parallel(qualityAnalysis: {
 )
 
 stage name: 'QA', concurrency: 1
-checkpoint 'ENTER QA'
+
+node('linux') {
+    // DEPLOY ON THE QA SERVER
+    echo "INFO - Starting QA Deploy"
+    sh 'rm -rf *'
+    unarchive mapping: ['target/petclinic.war': 'petclinic.war']
+
+    deployApp 'petclinic.war', qaCatalinaBase, qaHttpPort
+    echo "INFO - Ending QA Deploy"
+}
+
 
 stage name: 'Staging', concurrency: 1
-checkpoint 'CHOOSE TO ENTER STAGING'
+input message: "Does the app on QA http://localhost:$qaHttpPort/ look good? If yes, we deploy on staging.", ok: "DEPLOY TO STAGING!"
+try {
+    checkpoint('Before staging')
+} catch (NoSuchMethodError _) {
+    echo 'Checkpoint feature available in CloudBees Jenkins Enterprise.'
+}
+node('linux') {
+    // DEPLOY ON STAGING
+    echo "INFO - Starting Staging Deploy"
+    unarchive mapping: ['target/petclinic.war': 'petclinic.war']
+    deployApp 'petclinic.war', stagingCatalinaBase, stagingHttpPort
+    echo "Application is available on STAGING at http://localhost:$stagingHttpPort/"
+    echo "INFO - Ending Staging Deploy"
+}
+
+input message: "Are you finished - can we shutdown the running servers", ok: "SHUTDOWN SERVERS"
+
 node('linux') {
     //CLEAN UP RUNNING SERVERS
     def hosts=[
