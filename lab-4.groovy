@@ -1,18 +1,18 @@
-def jenkinsHome='/Users/Shared/jenkins'
+def sharedHome='/Users/Shared'
 /// Set up the list of servers we can deploy to
 catalinaHome='/Library/Tomcat' //We need to set this up as a binding class for methods to see
-def qaCatalinaBase = "${jenkinsHome}/apache-tomcat-8-qa"
-def qaHttpPort = 8081 // shutdown port = 8005
+def qaCatalinaBase = "${sharedHome}/apache-tomcat-8-qa"
+def qaHttpPort = 8091 // shutdown port = 8005
 
-def stagingCatalinaBase = "${jenkinsHome}/apache-tomcat-8-staging"
-def stagingHttpPort = 8082 // shutdown port = 8006
+def stagingCatalinaBase = "${sharedHome}/apache-tomcat-8-staging"
+def stagingHttpPort = 8092 // shutdown port = 8006
 
-def perfsCatalinaBase = "${jenkinsHome}/apache-tomcat-8-perfs"
-def perfsHttpPort = 8084 // shutdown port = 8008
+def perfsCatalinaBase = "${sharedHome}/apache-tomcat-8-perf"
+def perfsHttpPort = 8094 // shutdown port = 8008
 
-def productionCatalinaBase = "${jenkinsHome}/apache-tomcat-8-production"
-def productionHttpPort = 8083 // shutdown port = 8007
-
+def productionCatalinaBase = "${sharedHome}/apache-tomcat-8-prod"
+def productionHttpPort = 8093 // shutdown port = 8007
+///---------- Start Workflow Stages---------
 stage 'Build'
 node('linux') {
     // COMPILE AND JUNIT
@@ -52,7 +52,7 @@ parallel(qualityAnalysis: {
 
         ensureMaven()
         sh 'tar -x -f src.tar'
-        sh 'mvn -o jmeter:jmeter'
+       // sh 'mvn -o jmeter:jmeter'
 
         shutdownApp(perfsCatalinaBase)
         echo "INFO - Ending Perf Tests"
