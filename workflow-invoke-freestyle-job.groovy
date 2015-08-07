@@ -2,6 +2,9 @@ node ('shared') {
     
     /* Call a job with no parameters */
     
+    def z = new cb.utility.util()
+    z.checkOutFrom(repo)
+
     build 'freestyle-job'
     
     
