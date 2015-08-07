@@ -2,7 +2,7 @@ node ('shared') {
     
     /* Call a job with no parameters */
     def repo = 'https://github.com/kishorebhatia/workflow-demos'
-    def z = new cb.utility.util()
+    def z = new com.cb.util.util()
     z.checkOutFrom(repo)
 
     build 'freestyle-job'
