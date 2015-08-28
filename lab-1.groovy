@@ -8,6 +8,7 @@ node('linux') { // COMPILE AND JUNIT
     ensureMaven()
     //sh 'mvn -o clean package'
      sh 'mvn clean package'
+     echo 'build step completed'
 }
 
 
