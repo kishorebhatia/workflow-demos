@@ -1,8 +1,8 @@
 node('linux') { // COMPILE AND JUNIT
    // def src = 'https://github.com/harniman/spring-petclinic.git'
- def src = 'https://github.com/kishorebhatia/spring-petclinic'
-    git url: src, poll: true
-    
+ //def src = 'https://github.com/kishorebhatia/spring-petclinic'
+   // git url: src, poll: true
+    checkout changelog: true, poll: true, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/kishorebhatia/spring-petclinic']]]
     sh 'sleep 30'
 
     ensureMaven()
