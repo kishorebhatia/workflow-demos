@@ -1,7 +1,7 @@
 node('linux') { // COMPILE AND JUNIT
    // def src = 'https://github.com/harniman/spring-petclinic.git'
  def src = 'https://github.com/kishorebhatia/spring-petclinic'
-    git url: src
+    git url: src, poll: true
     
     sh 'sleep 30'
 
