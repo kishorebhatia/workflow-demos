@@ -7,7 +7,7 @@ node {
 
     stage "Build"
     ensureMaven()
-    sh 'mvn -o clean package'
+    sh 'mvn clean package'
     sh 'tar -c -f src.tar src/ pom.xml'
     archive 'src.tar, target/petclinic.war'
     step $class: 'hudson.tasks.junit.JUnitResultArchiver', testResults: 'target/surefire-reports/*.xml'
